@@ -15,8 +15,7 @@ app.get('/api/comics', (req, res) => {
     fs.readFile(comicJSONLocation, function(err,data) {
         if(err) throw err
 
-        jsonData = JSON.parse(data);
-        res.json(jsonData);
+        res.json(JSON.parse(data));
     });
 
     return;
