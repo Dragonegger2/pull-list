@@ -6,14 +6,14 @@ module.exports = React.createClass( {
   getInitialState: function() {
     return {
       filterText: '',
-      inStockOnly: false
+      inPrint: false
     };
   },
 
-  handleUserInput: function(filterText, inStockOnly) {
+  handleUserInput: function(filterText, inPrint) {
     this.setState({
       filterText: filterText,
-      inStockOnly: inStockOnly
+      inPrint: inPrint
     });
   },
 
@@ -22,13 +22,13 @@ module.exports = React.createClass( {
         <div id='seriesSearch'>
           <ComicResultsSearchBar
             filterText={this.state.filterText}
-            inStockOnly={this.state.inStockOnly}
+            inPrint={this.state.inPrint}
             onUserInput={this.handleUserInput} 
           />
           <ComicSeriesTable
             comics={this.props.comics}
             filterText={this.state.filterText}
-            inStockOnly={this.state.inStockOnly}
+            inPrint={this.state.inPrint}
           />
         </div>
     );

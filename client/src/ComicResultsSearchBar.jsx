@@ -4,7 +4,7 @@ module.exports = React.createClass({
   handleChange: function() {
     this.props.onUserInput(
       this.refs.filterTextInput.value,
-      this.refs.inStockOnlyInput.checked
+      this.refs.inPrintInput.checked
     );
   },
 
@@ -21,8 +21,8 @@ module.exports = React.createClass({
         <p>
           <input
             type="checkbox"
-            checked={this.props.inStockOnly}
-            ref="inStockOnlyInput"
+            checked={this.props.inPrint}
+            ref="inPrintInput"
             onChange={this.handleChange}
           />
           {' '}
