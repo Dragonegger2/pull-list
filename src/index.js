@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-var ComicSeries = require('./ComicSeries.jsx');
+import ComicSeries from './ComicSeries';
 
 var COMICS = [
   {comicName: "Amazing Spider-man (2014-2015)", inPrint: false},
