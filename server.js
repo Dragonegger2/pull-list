@@ -48,9 +48,6 @@ app.get('/api/comics', (req, res) => {
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-  console.log(`Private key: ${PRIVATE_KEY}`);
-  console.log(`Public key: ${PUBLIC_KEY}`);
-  
 });
 
 function getCurrentDateFormatted() {
