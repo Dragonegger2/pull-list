@@ -1,67 +1,47 @@
-const express = require('express');
-const app = express();
-var crypto = require('crypto');
-var request = require('request');
+const express = require('express'),
+      app = express(),
+      nano = require('nano')('http://localhost:5984');
+
+var MarvelAPI = require('./marvelAPI.jsx');
+MarvelAPI = new MarvelAPI();
 
 var API_PORT = 3001;
 
-var PRIVATE_KEY = process.env.MARVEL_PRIVATE_KEY;
-var PUBLIC_KEY  = process.env.MARVEL_PUBLIC_KEY;
 
-var limit = 100;
-var ts = 1234512;
-
-var hashBuilder = `${ts}${PRIVATE_KEY}${PUBLIC_KEY}`;
-var hashValue = crypto.createHash('md5').update(hashBuilder).digest("hex");
-
-var queryString = `http://gateway.marvel.com:80/v1/public/series?contains=comic&seriesType=ongoing&limit=${limit}&apikey=${PUBLIC_KEY}&ts=${ts}&hash=${hashValue}`;
-
-
-//Important guid link.curl -X GET http://127.0.0.1:5984/_uuids
-//https://imagecomics.com/comics/series/P675
 app.set('port', (API_PORT || 3001));
 
 var lastTimeRequestWasMade;
 var savedData;
 
+app.get('/api/uuid', (req,res) => {
+    nano.request({db: "_uuids"}, function(_,uuids){ 
+      console.log(uuids);
+      res.send(uuids); 
+    });
+})
+
 app.get('/api/comics', (req, res) => {
-  // var rightNowDate = getCurrentDateFormatted();
+  var rightNowDate = getCurrentDateFormatted();
   
-  // if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
-  //   lastTimeRequestWasMade = rightNowDate
-    
-  //   console.log(`Requesting data from Marvel.com on ${rightNowDate}`);
-  //   //TODO: Loop the request until we get all the results, adding all of them into the JSON array.
-  //   request.get({
-  //     url: queryString,
-  //     json: true
-  //   }, (err, resp, data) => {
-  //     console.log("Storing data for subsequent retrieval.");
+  if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
+    lastTimeRequestWasMade = rightNowDate;
 
-  //     savedData = data;
-  //     res.send(savedData);
-  //     return;
-  //   });
-  // } 
-  // else {
-  //   res.send(savedData);
-  //   return;
-  // }
-  res.json("[]");
+    MarvelAPI.getComics(rightNowDate, (data) => {
+      res.json(data);
+    });
 
+  }
 });
 
+/***
+ * App startup validates the connection to the server,
+ * and if the date that the server was last updated is not the same
+ * calendar day updates the comics as needed.
+ */
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-  console.log(`Server is being warmed up with comic data...`);
-  populateDatabase(() => {
-    console.log(`Database has finished being warmed up.`);
-  });
 });
 
-function populateDatabase(callback) {
-  callback();
-}
 function getCurrentDateFormatted() {
   var date = new Date();
   var year = date.getFullYear();
