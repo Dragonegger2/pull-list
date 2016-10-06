@@ -4,6 +4,7 @@ const express = require('express'),
 
 var MarvelAPI = require('./marvelAPI.jsx');
 MarvelAPI = new MarvelAPI();
+var comics = nano.use('comics');
 
 var API_PORT = 3001;
 
@@ -27,10 +28,19 @@ app.get('/api/comics', (req, res) => {
     lastTimeRequestWasMade = rightNowDate;
 
     MarvelAPI.getComics(rightNowDate, (data) => {
-      res.json(data);
-    });
+      //For each element in the array check if it exists in the database, 
+      //if it doesn't, create it, if it does, update it with the revision id.
+      var uploadData = { 
+        "docs" : data 
+      };
 
-  }
+      comics.bulk(uploadData, (dbResponse) =>{
+        console.log(dbResponse);
+        console.log("Finished bulk uploading.");
+        res.json(uploadData);        
+      });
+      });
+    }
 });
 
 /***
@@ -38,8 +48,13 @@ app.get('/api/comics', (req, res) => {
  * and if the date that the server was last updated is not the same
  * calendar day updates the comics as needed.
  */
+
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
+
+  function loadMarvelDatabase(() => {
+    console.log("Finished loading/updating Marvel Comic Database...");
+  });
 });
 
 function getCurrentDateFormatted() {
