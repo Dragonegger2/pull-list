@@ -5,10 +5,10 @@ module.exports = React.createClass({
   render: function() {
     var rows = [];
     this.props.comics.forEach(function(comic) {
-      if (comic.comicName.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 || (!comic.inPrint && this.props.inPrint)) {
+      if (comic.value.title.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 || (!comic.inPrint && this.props.inPrint)) {
         return;
       }
-      rows.push(<ComicSeriesResultItem series={comic} key={comic.comicName} />);
+      rows.push(<ComicSeriesResultItem series={comic.value} key={comic.value.title} />);
     }.bind(this));
 
     return( 

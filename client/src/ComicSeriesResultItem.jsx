@@ -5,8 +5,7 @@ class ComicSeriesResultItem extends Component{
   render() {
     return (
       <div>
-        <span>{this.props.series.comicName}</span>
-        <span>{this.props.series.inPrint}</span>
+        <span>{this.props.series.title}</span>
       </div>
     )
   }

@@ -22,25 +22,28 @@ app.get('/api/uuid', (req,res) => {
 })
 
 app.get('/api/comics', (req, res) => {
-  var rightNowDate = getCurrentDateFormatted();
+  // var rightNowDate = getCurrentDateFormatted();
   
-  if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
-    lastTimeRequestWasMade = rightNowDate;
+  // if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
+  //   lastTimeRequestWasMade = rightNowDate;
 
-    MarvelAPI.getComics(rightNowDate, (data) => {
-      //For each element in the array check if it exists in the database, 
-      //if it doesn't, create it, if it does, update it with the revision id.
-      var uploadData = { 
-        "docs" : data 
-      };
+  //   MarvelAPI.getComics(rightNowDate, (data) => {
+  //     //For each element in the array check if it exists in the database, 
+  //     //if it doesn't, create it, if it does, update it with the revision id.
+  //     var uploadData = { 
+  //       "docs" : data 
+  //     };
 
-      comics.bulk(uploadData, (dbResponse) =>{
-        console.log(dbResponse);
-        console.log("Finished bulk uploading.");
-        res.json(uploadData);        
-      });
-      });
-    }
+  //     comics.bulk(uploadData, (dbResponse) =>{
+  //       console.log(dbResponse);
+  //       console.log("Finished bulk uploading.");
+  //       res.json(uploadData);        
+  //     });
+  //     });
+  //   }
+  comics.view("current", "current", (err, body) => {
+    res.json(body.rows);
+  });
 });
 
 /***
@@ -52,9 +55,9 @@ app.get('/api/comics', (req, res) => {
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 
-  function loadMarvelDatabase(() => {
-    console.log("Finished loading/updating Marvel Comic Database...");
-  });
+  // function loadMarvelDatabase(() => {
+  //   console.log("Finished loading/updating Marvel Comic Database...");
+  // });
 });
 
 function getCurrentDateFormatted() {

@@ -11,10 +11,9 @@ var PullList = React.createClass({
   },
 
   componentDidMount: function() {
-    fetch("/api/comics")
+    fetch(`/api/comics`)
       .then((response) => response.json())
       .then((jsonResponse) => {
-        console.log(jsonResponse);
         this.setState({
           comics: jsonResponse
         });
@@ -22,7 +21,6 @@ var PullList = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.comics);
     return (
       <div id='app'>Hello World!
       <ComicSeries comics={this.state.comics}/>
