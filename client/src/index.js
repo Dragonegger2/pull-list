@@ -11,7 +11,7 @@ var PullList = React.createClass({
   },
 
   componentDidMount: function() {
-    fetch(`/api/comics`)
+    fetch(`http://localhost:3001/api/comics`)
       .then((response) => response.json())
       .then((jsonResponse) => {
         this.setState({

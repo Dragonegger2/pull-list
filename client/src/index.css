@@ -16,11 +16,15 @@ body {
 
 #userView {
   float:right;
-  width:40%;
+  width:60%;
 }
 
 #seriesSearch {
   float:left;
   background-color: aliceblue;
   width:30%;
+}
+
+.title {
+  font-size: 115%;
 }

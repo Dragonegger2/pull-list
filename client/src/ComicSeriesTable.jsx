@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ComicSeriesResultItem from './ComicSeriesResultItem';
 
-module.exports = React.createClass({
-  render: function() {
+class ComicSeriesTable extends Component {
+  render() {
     var rows = [];
     this.props.comics.forEach(function(comic) {
-      if (comic.value.title.toLowerCase().indexOf(this.props.filterText.toLowerCase()) === -1 || (!comic.inPrint && this.props.inPrint)) {
+      if(this.props.filterText === "" || this.props.filterText === null) {
         return;
       }
-      rows.push(<ComicSeriesResultItem series={comic.value} key={comic.value.title} />);
+      if (comic.value.title.toLowerCase().indexOf(this.props.filterText.toLowerCase()) !== -1) {
+        rows.push(<ComicSeriesResultItem series={comic.value} key={comic.id} />);
+      }
     }.bind(this));
 
     return( 
       <div>{rows}</div>
     );
   }
-});
+}
+
+export default ComicSeriesTable;
