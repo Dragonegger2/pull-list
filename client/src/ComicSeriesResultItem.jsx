@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
 class ComicSeriesResultItem extends Component {
-
-  removeComic() {
-    console.log("User trying to remove comic.");
-  }
-
-  render() { 
+  render() {
     return (
       <div>
-        <span className="title">{this.props.series.title}</span>
-        <span onClick={this.removeComic}>CLICK HERE TO REMOVE THIS</span>
+        <span className="title">{this.props.series.value.title}</span>
+        <span onClick={() => {this.props.deleteComic(this.props.series.id)}}>X</span>
       </div>
     )
   }
 }
 
 export default ComicSeriesResultItem;
-

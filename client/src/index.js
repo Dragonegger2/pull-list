@@ -19,11 +19,21 @@ var PullList = React.createClass({
         });
       });
   },
+  deleteComic: function(id) {
+    console.log(`User trying to remove comic by id: ${id}`);
+     // fetch(`/api/comics/${id}`, {
+    //   method: 'DELETE'
+    // }, (err, body) => {
+    // });
 
+  },
   render: function() {
     return (
-      <div id='app'>Hello World!
-      <ComicSeries comics={this.state.comics}/>
+      <div id='app'>
+        <ComicSeries 
+          deleteComic={this.deleteComic} 
+          comics={this.state.comics}
+        />
       </div>
       );
   }

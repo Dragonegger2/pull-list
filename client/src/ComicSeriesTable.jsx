@@ -9,7 +9,11 @@ class ComicSeriesTable extends Component {
         return;
       }
       if (comic.value.title.toLowerCase().indexOf(this.props.filterText.toLowerCase()) !== -1) {
-        rows.push(<ComicSeriesResultItem series={comic.value} key={comic.id} />);
+        rows.push(<ComicSeriesResultItem 
+          series={comic} 
+          key={comic.id} 
+          deleteComic={this.props.deleteComic}/>
+        );
       }
     }.bind(this));
 

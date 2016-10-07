@@ -10,10 +10,9 @@ module.exports = React.createClass( {
     };
   },
 
-  handleUserInput: function(filterText, inPrint) {
+  handleUserInput: function(filterText) {
     this.setState({
       filterText: filterText,
-      inPrint: inPrint
     });
   },
 
@@ -22,13 +21,12 @@ module.exports = React.createClass( {
         <div id='seriesSearch'>
           <ComicResultsSearchBar
             filterText={this.state.filterText}
-            inPrint={this.state.inPrint}
             onUserInput={this.handleUserInput} 
           />
           <ComicSeriesTable
             comics={this.props.comics}
+            deleteComic={this.props.deleteComic}
             filterText={this.state.filterText}
-            inPrint={this.state.inPrint}
           />
         </div>
     );
