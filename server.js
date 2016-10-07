@@ -51,26 +51,7 @@ app.get('/api/comics/:id', (request, response) => {
   });
 });
 
-app.get('/api/comics', (req, res) => {
-  // var rightNowDate = getCurrentDateFormatted();
-  
-  // if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
-  //   lastTimeRequestWasMade = rightNowDate;
-
-  //   MarvelAPI.getComics(rightNowDate, (data) => {
-  //     //For each element in the array check if it exists in the database, 
-  //     //if it doesn't, create it, if it does, update it with the revision id.
-  //     var uploadData = { 
-  //       "docs" : data 
-  //     };
-
-  //     comics.bulk(uploadData, (dbResponse) =>{
-  //       console.log(dbResponse);
-  //       console.log("Finished bulk uploading.");
-  //       res.json(uploadData);        
-  //     });
-  //     });
-  //   }
+app.get('/api/comics', (req, res) => {  
   console.log("Fetching all comics from the database.");
 
   comics.view("current", "current", (err, body) => {
@@ -78,6 +59,30 @@ app.get('/api/comics', (req, res) => {
   });
 });
 
+/**
+ * Super bad example to load data into couchdb.
+ */
+app.get('/api/comics2', (req, res) => {
+  var rightNowDate = getCurrentDateFormatted();
+  
+  if( lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
+    lastTimeRequestWasMade = rightNowDate;
+
+    MarvelAPI.getComics(rightNowDate, (data) => {
+      //For each element in the array check if it exists in the database, 
+      //if it doesn't, create it, if it does, update it with the revision id.
+      var uploadData = { 
+        "docs" : data 
+      };
+
+      comics.bulk(uploadData, (dbResponse) =>{
+        console.log(dbResponse);
+        console.log("Finished bulk uploading.");
+        res.json(uploadData);        
+      });
+      });
+    }
+})
 /***
  * App startup validates the connection to the server,
  * and if the date that the server was last updated is not the same
