@@ -4,13 +4,13 @@ import './index.css';
 import ComicSeries from './ComicSeries/ComicSeries';
 
 var PullList = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       comics: []
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     fetch(`http://localhost:3001/api/comics`)
       .then((response) => response.json())
       .then((jsonResponse) => {
@@ -19,23 +19,40 @@ var PullList = React.createClass({
         });
       });
   },
-  deleteComic: function(id) {
-    console.log(`User trying to remove comic by id: ${id}`);
-     // fetch(`/api/comics/${id}`, {
-    //   method: 'DELETE'
-    // }, (err, body) => {
-    // });
 
+  deleteComic: function (comicDBID) {
+    console.log(`Deleting ${comicDBID}`)
+
+    fetch(`/api/comics/${comicDBID}`, {
+      method: 'DELETE'
+    }).then((body) => {
+      console.log(body);
+      var comics = this.state.comics;
+      console.log(comics);
+      if (body.ok === true) {
+        comics.every((comic, index, arr) => {
+          if (comic.id === comicDBID) {
+            comics.splice(index, 1);
+            return false;
+          }
+          return true;
+        });
+
+        console.log(comics);
+        this.setState({comics: comics});
+      }
+    })
   },
-  render: function() {
+
+  render: function () {
     return (
       <div id='app'>
-        <ComicSeries 
-          deleteComic={this.deleteComic} 
+        <ComicSeries
+          deleteComic={this.deleteComic}
           comics={this.state.comics}
-        />
+          />
       </div>
-      );
+    );
   }
 });
 

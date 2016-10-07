@@ -32,7 +32,8 @@ app.delete('/api/comics/:id', (req, res) => {
 
     comics.destroy(id, data._rev, (err, body) => {
       if(err != null) { res.send(error); }
-
+      console.log(err);
+      console.log(body);
       res.json(body);
     });
   });
