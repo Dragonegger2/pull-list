@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import ComicSeries from './ComicSeries';
+import ComicSeries from './ComicSeries/ComicSeries';
 
 var PullList = React.createClass({
   getInitialState: function() {

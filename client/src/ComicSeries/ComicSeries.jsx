@@ -1,6 +1,6 @@
 import React from 'react';
 import ComicSeriesTable from './ComicSeriesTable';
-import ComicResultsSearchBar from './ComicResultsSearchBar';
+import ComicResultsSearchBar from './ComicSeriesResultsSearchBar';
 
 module.exports = React.createClass( {
   getInitialState: function() {
