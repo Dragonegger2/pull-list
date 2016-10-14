@@ -74,7 +74,7 @@ app.get('/api/comics2', (req, res) => {
       var uploadData = { 
         "docs" : data 
       };
-
+//http://127.0.0.1:5984/comics/_design/current/_view/titleId?limit=100&reduce=false
       comics.bulk(uploadData, (dbResponse) =>{
         console.log(dbResponse);
         console.log("Finished bulk uploading.");
