@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ComicSeriesResultItem from './ComicSeriesResultItem';
-import NewComicSeriesResultItem from './NewComicSeriesResultItem';
 import NewComicSeries from './NewComicSeries';
 
 class ComicSeriesTable extends Component {
@@ -15,7 +14,7 @@ class ComicSeriesTable extends Component {
         return;
       }
       if (comic.value.title.toLowerCase().indexOf(this.props.filterText.toLowerCase()) !== -1) {
-        rows.push(<NewComicSeriesResultItem 
+        rows.push(<ComicSeriesResultItem 
           series={comic} 
           key={comic.id} 
           deleteComic={this.props.deleteComic}/>
@@ -24,7 +23,7 @@ class ComicSeriesTable extends Component {
     }.bind(this));
 
     return(
-      <div>
+      <div className='results'>
         {rows}
       </div>
     );
