@@ -52,3 +52,23 @@ body {
   margin-right: 0;
   border: black 1px solid;
 }
+
+.newSeries {
+  display: flex;
+  flex-direction: column;
+  overflow:hidden;
+  width:500px;
+}
+.newSeries button{
+  width:100%;
+}
+.value {
+  display:flex;
+  flex-direction:row;
+}
+.value span {
+  width: 20%
+}
+.value input {
+  flex-grow:2;
+}

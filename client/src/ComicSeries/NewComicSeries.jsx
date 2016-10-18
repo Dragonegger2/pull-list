@@ -12,21 +12,38 @@ class NewComicSeries extends Component {
   }
   render() {
     return (   
-      <div className='newSeries'>
-      <h2>
-        Add a new series:
-      </h2>
+		<div className='newSeries'>
+			<div className='value name'>
+				<span>Series Name:</span>
         <input 
-          type="text" 
+          type="text"
           value={this.props.searchName}
-          onChange={this.handleChange} 
-          />
-        <input 
+          onChange={this.handleChange}
+        />
+			</div>
+			<div className='value authors'>
+				<span>Authors:</span>
+        <input type="text" />
+        <span class='addAuthor'>
+            +
+        </span>
+			</div>
+			<div className='value'>
+				<span>Publisher:</span>
+				<select>
+					<option value="Image Comics">Image Comics</option>
+					<option value="Marvel Comics">Marvel Comics</option>
+				</select>
+			</div>
+			<div className='value'>
+				 <input 
+
           type="button"
-          value="Add"
+          value="CREATE"
           onClick={() => this.props.addComic(this.props.searchName)}
           />
-      </div>
+			</div>
+		</div>
     );
   }
 }
