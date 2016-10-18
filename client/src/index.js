@@ -44,11 +44,21 @@ var PullList = React.createClass({
     })
   },
 
+  addComic: function(name) {
+    console.log(`Adding a comic with the name of: ${name}`);
+    fetch(`/api/comics/${name}`, {
+      method: 'PUT'
+    }).then((body) => {
+      console.log(body);
+    });
+  },
+
   render: function () {
     return (
       <div id='app'>
         <ComicSeries
           deleteComic={this.deleteComic}
+          addComic={this.addComic}
           comics={this.state.comics}
           />
       </div>

@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 class ComicSeriesResultItem extends Component {
   render() {
     var thumbnail; 
-    if(this.props.series.value.thumbnail != null) {
-      thumbnail = <div className='thumbnail'><img src={this.props.series.value.thumbnail} alt="Series" /></div>;
+    if(this.props.thumbnail != null) {
+      thumbnail = <div className='thumbnail'><img src={this.props.thumbnail} alt="Series" /></div>;
     }
+    
     var publishing;
-    if(this.props.series.value.title.indexOf('(') != -1) {
-      var title =  this.props.series.value.title.substring(0, this.props.series.value.title.indexOf('('));
-      publishing = this.props.series.value.title.substring(this.props.series.value.title.indexOf('('), this.props.series.value.title.indexOf(')')+1);
-
+    var title = this.props.title;
+    if(this.props.title.indexOf('(') !== -1) {
+      title =  this.props.title.substring(0, this.props.title.indexOf('('));
+      publishing = this.props.title.substring(this.props.title.indexOf('('), this.props.title.indexOf(')')+1);
     }
+    
     
     return (
       <div className='entry'>
@@ -19,12 +21,11 @@ class ComicSeriesResultItem extends Component {
         <div className='data'>
           <span className="title">
             <h2>{title}</h2>
-          </span>
-          <p>{publishing}</p>
-          <p className='description'>{this.props.series.value.desc}</p>
+          </span> 
+            <p>{publishing}</p>
         </div>
         <div>
-            <a className='deleteComic' onClick={() => {this.props.deleteComic(this.props.series.id)}} href='#' title='Delete this comic from the database.'>X</a>
+            <a className='deleteComic' onClick={() => {this.props.deleteComic(this.props.id)}} href='#' title='Delete this comic from the database.'>X</a>
         </div>
       </div>
     )

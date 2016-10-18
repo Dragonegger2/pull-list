@@ -26,6 +26,7 @@ module.exports = React.createClass( {
           <ComicSeriesTable
             comics={this.props.comics}
             deleteComic={this.props.deleteComic}
+            addComic={this.props.addComic}
             filterText={this.state.filterText}
           />
         </div>
