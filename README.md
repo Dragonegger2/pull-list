@@ -17,3 +17,5 @@ The server can be found at localhost:3001
 
 ##To Do:
 Have the server initialize the CouchDB with the databases, and views. 
+
+

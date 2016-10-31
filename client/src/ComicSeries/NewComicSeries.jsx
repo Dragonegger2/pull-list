@@ -7,12 +7,12 @@ class NewComicSeries extends Component {
     );
   }
 
-  handleSubmit() {
-      console.log("Pressed a button")
-  }
   render() {
     return (   
 		<div className='newSeries'>
+      <div>
+        <h2>Add a new series:</h2>
+      </div>
 			<div className='value name'>
 				<span>Series Name:</span>
         <input 

@@ -4,8 +4,6 @@ const express = require('express'),
   nano = require('nano')(dbAddress),
   API_PORT = 3001;
 
-
-
 //Nano setup.
 var MarvelAPI = require('./marvelAPI.jsx');
 MarvelAPI = new MarvelAPI();
@@ -39,7 +37,6 @@ var uuidGenerator = (function () {
   };
 })();
 
-
 /**
  * Delete a comic based on an ID.
  */
@@ -62,7 +59,9 @@ app.delete('/api/comics/:id', (req, res) => {
 
 /**
  * Create a comic with the passed name. 
- * Not a safe operation, it does not check if the name already exists. 
+ * Not a safe operation, it does not check if the name already exists.
+ * 
+ * TODO: Make this a safe operation. 
  */
 app.put('/api/comics/:name', (req, res) => {
   console.log(`Trying to create a database entry with the series name of: ${req.params.name}`);
@@ -97,6 +96,9 @@ app.get('/api/comics/:id', (request, response) => {
   });
 });
 
+/**
+ * Returns all comics in the database. 
+ */
 app.get('/api/comics', (req, res) => {
   console.log("Fetching all comics from the database.");
 
@@ -105,30 +107,30 @@ app.get('/api/comics', (req, res) => {
   });
 });
 
-/**
- * Super bad example to load data into couchdb.
- */
-app.get('/api/comics2', (req, res) => {
-  var rightNowDate = getCurrentDateFormatted();
+// /**
+//  * Super bad example to load data into couchdb.
+//  */
+// app.get('/api/comics2', (req, res) => {
+//   var rightNowDate = getCurrentDateFormatted();
 
-  if (lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
-    lastTimeRequestWasMade = rightNowDate;
+//   if (lastTimeRequestWasMade === null || rightNowDate !== lastTimeRequestWasMade) {
+//     lastTimeRequestWasMade = rightNowDate;
 
-    MarvelAPI.getComics(rightNowDate, (data) => {
-      //For each element in the array check if it exists in the database, 
-      //if it doesn't, create it, if it does, update it with the revision id.
-      var uploadData = {
-        "docs": data
-      };
-      //http://127.0.0.1:5984/comics/_design/current/_view/titleId?limit=100&reduce=false
-      comics.bulk(uploadData, (dbResponse) => {
-        console.log(dbResponse);
-        console.log("Finished bulk uploading.");
-        res.json(uploadData);
-      });
-    });
-  }
-});
+//     MarvelAPI.getComics(rightNowDate, (data) => {
+//       //For each element in the array check if it exists in the database, 
+//       //if it doesn't, create it, if it does, update it with the revision id.
+//       var uploadData = {
+//         "docs": data
+//       };
+//       //http://127.0.0.1:5984/comics/_design/current/_view/titleId?limit=100&reduce=false
+//       comics.bulk(uploadData, (dbResponse) => {
+//         console.log(dbResponse);
+//         console.log("Finished bulk uploading.");
+//         res.json(uploadData);
+//       });
+//     });
+//   }
+// });
 
 /***
  * App startup validates the connection to the server,
@@ -137,10 +139,6 @@ app.get('/api/comics2', (req, res) => {
  */
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-
-  // function loadMarvelDatabase(() => {
-  //   console.log("Finished loading/updating Marvel Comic Database...");
-  // });
 });
 
 function getCurrentDateFormatted() {

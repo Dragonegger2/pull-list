@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import ComicSeries from './ComicSeries/ComicSeries';
-
+var db = 'http://localhost:3001/api'
 var PullList = React.createClass({
   getInitialState: function () {
     return {
@@ -11,7 +11,7 @@ var PullList = React.createClass({
   },
 
   componentDidMount: function () {
-    fetch(`http://localhost:3001/api/comics`)
+    fetch(`${db}/comics`)
       .then((response) => response.json())
       .then((jsonResponse) => {
         this.setState({
@@ -37,7 +37,6 @@ var PullList = React.createClass({
           }
           return true;
         });
-
         console.log(comics);
         this.setState({comics: comics});
       }
@@ -50,7 +49,19 @@ var PullList = React.createClass({
       method: 'PUT'
     }).then((body) => {
       console.log(body);
-    });
+    }).then(() => {
+      console.log("Added comic, now fetching updated list from DB.");
+      fetch(`/api/comics`)
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+          console.log(jsonResponse);
+          this.setState({
+            comics: jsonResponse
+          });
+        });
+    })
+    //Update the state.
+
   },
 
   render: function () {
