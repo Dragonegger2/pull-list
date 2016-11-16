@@ -49,12 +49,14 @@ var PullList = React.createClass({
       method: 'PUT'
     }).then((body) => {
       console.log(body);
+      if(body.ok !== true) {
+        console.log("Was unable to add the entered comic.");
+      } 
     }).then(() => {
       console.log("Added comic, now fetching updated list from DB.");
       fetch(`/api/comics`)
         .then((response) => response.json())
         .then((jsonResponse) => {
-          console.log(jsonResponse);
           this.setState({
             comics: jsonResponse
           });
